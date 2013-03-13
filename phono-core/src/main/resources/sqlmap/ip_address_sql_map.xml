@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="tmall_member">
+
+    <!--===================================-->
+    <!-- Insert语句 -->
+    <!--===================================-->
+    <insert id="IBatisIpAddressDAO.insertNewIpAddress" parameterClass="Map">
+        INSERT INTO ip_address(
+          ip,address
+        )
+        VALUES(
+          #ip#,#address#
+        )
+    </insert>
+
+    <!--===================================-->
+    <!-- Select语句 -->
+    <!--===================================-->
+    <select id="IBatisIpAddressDAO.queryAddressByIp" parameterClass="String" resultClass="String">
+        SELECT
+          address
+        FROM ip_address
+        WHERE ip=#ip#
+    </select>
+
+</sqlMap>

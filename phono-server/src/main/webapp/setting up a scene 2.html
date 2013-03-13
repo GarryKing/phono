@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="GBK">
+    <title>setting up a scene 2</title>
+    <script src="js/ThreeJS/three.js"></script>
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/test/rotate.js"></script>
+    <style type="text/css">
+        div#canvas3d {
+            cursor: move;
+            width: auto;
+            height: 550px;
+            background-color: #EEEEEE;
+        }
+
+        .debug {
+            width: 1000px;
+        }
+
+        .debug div {
+            border: 1px solid yellow;
+            width: 250px;
+            height: 40px;
+            float: left;
+        }
+    </style>
+</head>
+
+<body onload='threeStart();' style="border: 1px solid blue;">
+<!--盛放canvas的容器-->
+<div id="canvas3d"></div>
+<div class="debug">
+    <div class="camera_X"></div>
+    <div class="camera_Y"></div>
+    <div class="camera_Z"></div>
+</div>
+<div class="debug">
+    <div class="camera_theta"></div>
+    <div class="camera_phi"></div>
+</div>
+<div class="debug">
+    <div class="target_x"></div>
+    <div class="target_y"></div>
+    <div class="target_z"></div>
+</div>
+
+<script type="text/javascript">
+    //开启Three.js渲染器
+    var renderer;//声明全局变量（对象）
+    function initThree() {
+        width = document.getElementById('canvas3d').clientWidth;//获取画布「canvas3d」的宽
+        height = document.getElementById('canvas3d').clientHeight;//获取画布「canvas3d」的高
+        renderer = new THREE.WebGLRenderer({antialias: true});//生成渲染器对象（属性：抗锯齿效果为设置有效）
+        renderer.setSize(width, height);//指定渲染器的高宽（和画布框大小一致）
+        document.getElementById('canvas3d').appendChild(renderer.domElement);//追加 【canvas】 元素到 【canvas3d】 元素中。
+        renderer.setClearColorHex(0x000, 1.0);//设置canvas背景色(clearColor)
+    }
+    //设置相机
+    var camera;
+    function initCamera() {
+        camera = new THREE.PerspectiveCamera(10, width / height, 1, 5000000);//设置透视投影的相机,默认情况下相机的上方向为Y轴，右方向为X轴，沿着Z轴朝里（视野角：fov 纵横比：aspect 相机离视体积最近的距离：near 相机离视体积最远的距离：far）
+        camera.position.x = 0;//设置相机的位置坐标
+        camera.position.y = 0;//设置相机的位置坐标
+        camera.position.z = 500;//设置相机的位置坐标
+        camera.up.x = 0;//设置相机的上为「x」轴方向
+        camera.up.y = 0;//设置相机的上为「y」轴方向
+        camera.up.z = 0;//设置相机的上为「z」轴方向
+        camera.lookAt({x: 0, y: 0, z: 0 });//设置视野的中心坐标
+    }
+    //设置场景
+    var scene;
+    function initScene() {
+        scene = new THREE.Scene();
+    }
+    //设置光源
+    var light;
+    function initLight() {
+        light = new THREE.DirectionalLight(0xff0000, 1.0, 0);//设置平行光源
+        light.position.set(200, 200, 200);//设置光源向量
+        scene.add(light);// 追加光源到场景
+    }
+    //设置物体
+    var sphere;
+    function initObject() {
+        sphere = new THREE.Mesh(
+                new THREE.SphereGeometry(5, 60, 60)
+//                ,
+//                new THREE.MeshLambertMaterial({color: 0xB4FF8F}) //材质设定
+        );
+        scene.add(sphere);
+        sphere.position.set(0, 0, 0);
+    }
+
+    var sphere_2;
+    function initObject_2() {
+        sphere_2 = new THREE.Mesh(
+                new THREE.SphereGeometry(5, 60, 60)
+//                ,
+//                new THREE.MeshLambertMaterial({color: 0xFFCFFA}) //材质设定
+        );
+        scene.add(sphere_2);
+        sphere_2.position.set(20, 0, 0);
+    }
+    //绑定键盘事件
+    $(document).keydown(function (event) {
+        var leftCode = 37, upCode = 38, rightCode = 39, downCode = 40, key_A = 65, key_S = 83, key_W = 87, key_D = 68, key_I = 73 , key_K = 75 , key_J = 74, key_L = 76;
+        var cameraMoveFactor = 1;
+        var cameraRotationFactor = 1;
+        var currCode = event.which;
+        var radianT = THREE.Math.degToRad(theta);
+        var radianP = THREE.Math.degToRad(phi);
+        if (currCode == leftCode) {
+            theta -= cameraMoveFactor;
+            rotateCameraX();
+        } else if (currCode == rightCode) {
+            theta += cameraMoveFactor;
+            rotateCameraX();
+        } else if (currCode == downCode) {
+            phi += cameraMoveFactor;
+            rotateCameraY();
+        } else if (currCode == upCode) {
+            phi -= cameraMoveFactor;
+            rotateCameraY();
+        } else if (currCode == key_W) {
+            camera.position.x = camera.position.x + 5 * cameraMoveFactor * Math.cos(radianT);
+            camera.position.y = camera.position.y + 5 * cameraMoveFactor * Math.cos(radianP);
+            camera.position.z = camera.position.z - 5 * cameraMoveFactor;
+        } else if (currCode == key_S) {
+            camera.position.x = camera.position.x - 5 * cameraMoveFactor * Math.cos(radianT);
+            camera.position.y = camera.position.y - 5 * cameraMoveFactor * Math.cos(radianP);
+            camera.position.z = camera.position.z + 5 * cameraMoveFactor;
+        } else if (currCode == key_I) {
+            camera.position.y = camera.position.y + 5 * cameraMoveFactor;
+        } else if (currCode == key_K) {
+            camera.position.y = camera.position.y - 5 * cameraMoveFactor;
+        } else if (currCode == key_J) {
+            camera.position.x = camera.position.x + 5 * cameraMoveFactor;
+        } else if (currCode == key_L) {
+            camera.position.x = camera.position.x - 5 * cameraMoveFactor;
+        }
+        renderer.render(scene, camera);
+        $(".camera_X").html("camera x:" + camera.position.x);
+        $(".camera_Y").html(", camera y:" + camera.position.y);
+        $(".camera_Z").html(", camera z:" + camera.position.z);
+        $(".camera_theta").html(", theta :" + theta);
+        $(".camera_phi").html(", phi :" + phi);
+        $(".target_x").html(", target_x :" + target.x);
+        $(".target_y").html(", target_y :" + target.y);
+        $(".target_z").html(", target_z :" + target.z);
+    });
+    //    绑定鼠标事件
+    $(document).mousemove(function (event) {
+
+    });
+    //执行
+    function threeStart() {
+        initThree();
+        initCamera();
+        initScene();
+        initLight();
+        initObject();
+        initObject_2();
+//        animate();
+        renderer.clear();
+        renderer.render(scene, camera);
+    }
+
+    function animate(delta) {
+        requestAnimationFrame(animate);
+    }
+
+</script>
+</body>
+</html>

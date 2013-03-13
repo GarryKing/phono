@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="GB2312"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="73747521hzq"/>
+        <property name="url" value="jdbc:mysql://42.121.31.110:3306/phono"/>
+    </bean>
+
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <!-- 此处应注入ibatis配置文件，而非sqlMap文件，否则会出现“there is no statement.....异常” -->
+        <property name="configLocation" value="classpath:ibatis_mysql.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--<bean id="iBatisAccessLogDAO" class="name.elegant.phono.core.admin.dao.impl.IBatisAccessLogDAO">-->
+    <!--<property name="dataSource">-->
+    <!--<ref bean="dataSource"/>-->
+    <!--</property>-->
+    <!--<property name="sqlMapClient">-->
+    <!--<ref bean="sqlMapClient"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="ipAddressDAO" class="name.elegant.phono.core.admin.dao.impl.IbatisIpAddressDAO">-->
+    <!--<property name="dataSource">-->
+    <!--<ref bean="dataSource"/>-->
+    <!--</property>-->
+    <!--<property name="sqlMapClient">-->
+    <!--<ref bean="sqlMapClient"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+</beans>

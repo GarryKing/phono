@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="tmall_member">
+
+    <!--===================================-->
+    <!-- 别名定义 -->
+    <!--===================================-->
+    <typeAlias alias="accessLogDO" type="name.elegant.phono.client.dataobject.AccessLogDO"/>
+
+    <!--===================================-->
+    <!-- 数据库字段关联DataObject -->
+    <!--===================================-->
+    <resultMap id="accessLogResult" class="accessLogDO">
+        <result column="access_id" property="accessId"/>
+        <result column="ip" property="ip"/>
+        <result column="access_time" property="accessTime"/>
+        <result column="request_type" property="requestType"/>
+        <result column="request_url" property="requestUrl"/>
+        <result column="status_code" property="statusCode"/>
+        <result column="return_size" property="returnSize"/>
+        <result column="access_util" property="accessUtil"/>
+        <result column="log_from" property="logFrom"/>
+        <result column="reserve_string_1" property="reserveString_1"/>
+        <result column="reserve_string_2" property="reserveString_2"/>
+        <result column="reserve_string_3" property="reserveString_3"/>
+        <result column="reserve_int_1" property="reserveInt_1"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <!--===================================-->
+    <!-- 常用SQL字段 -->
+    <!--===================================-->
+    <sql id="select.accessLog.all">
+        access_id,
+        ip,
+        access_time,
+        request_type,
+        request_url,
+        status_code,
+        return_size,
+        access_util,
+        log_from,
+        reserve_string_1,
+        reserve_string_2,
+        reserve_string_3,
+        reserve_int_1,
+        create_time,
+        modify_time
+    </sql>
+
+    <!--===================================-->
+    <!-- Insert语句 -->
+    <!--===================================-->
+    <insert id="IBatisAccessLogDAO.insertNewLog" parameterClass="accessLogDO">
+        INSERT INTO access_log(
+        <include refid="select.accessLog.all"/>
+        )
+        VALUES(
+        #accessId#,#ip#,#accessTime#,#requestType#,#requestUrl#,#statusCode#,
+        #returnSize#,#accessUtil#,#logFrom#,#reserveString_1#,#reserveString_2#,
+        #reserveString_3#,#reserveInt_1#,now(),now()
+        )
+    </insert>
+
+    <!--===================================-->
+    <!-- Select语句 -->
+    <!--===================================-->
+    <select id="IBatisAccessLogDAO.queryAllAccessLogDO" parameterClass="long" resultMap="accessLogResult">
+        SELECT
+        <include refid="select.accessLog.all"/>
+        FROM access_log
+    </select>
+
+    <select id="IBatisAccessLogDAO.queryAccessLogDOByIp" parameterClass="String" resultMap="accessLogResult">
+        SELECT
+        <include refid="select.accessLog.all"/>
+        FROM access_log
+        WHERE ip=#ip#
+    </select>
+
+</sqlMap>

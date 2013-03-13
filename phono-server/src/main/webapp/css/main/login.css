@@ -1,0 +1,50 @@
+#login-body {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 602px;
+    height: 372px;
+    margin-top: -196px;
+    margin-left: -311px;
+    padding: 10px;
+}
+
+#login-skin {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 622px;
+    height: 392px;
+    background-color: rgba(113, 101, 100, 0.6);
+    opacity: .4;
+}
+
+#login-wrap {
+    z-index: 2;
+    position: relative;
+    background-color: #f1f1f1;
+    border: 1px solid #908b8b;
+}
+
+#login-robot {
+    width: 600px;
+    height: 249px;
+    float: left;
+    overflow: hidden;
+}
+
+#login-robot-bg {
+    height: 249px;
+}
+
+#login-chat {
+    width: 600px;
+    height: 121px;
+    float: left;
+}
+
+#chat-list {
+    width: 600px;
+    height: 75px;
+    overflow: hidden;
+}
