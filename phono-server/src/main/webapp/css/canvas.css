@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/snowbg.jpg");
+    background-size: 100%;
+}
+
+canvas {
+    display: block;
+    float: left;
+}
+
+#sayWords {
+    position: absolute;
+    color: #c9c9c9;
+    display: inline-block;
+    width: 650px;
+    height: 50px;
+    text-align: center;
+    font-family: "YaHei Consolas Hybrid";
+    font-size: 23px;
+}
