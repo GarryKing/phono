@@ -25,32 +25,59 @@ function initBaseStyle() {
 }
 
 function draw() {
-    snowPool = new Array();
+    snowPool = [];
     for (var i = 1; i <= 400; i++) {
-        var size = 4 + 5 * Math.random()
+        var size = 6 + 5 * Math.random();
         snowPool[i - 1] = new Snow(size);
     }
-    rotateSnowAngle = 0;
-    rotatingAndMoveSnows(snowPool);
 
-    carray = new Array();
-    for (var j = 0; j < 20; j++) {
-        carray[j] = new Circle(clientVisibleWidth * Math.random(), clientVisibleHeight * Math.random(), 10);
+    carray = [];
+    var length = 65;
+    var radium = 10;
+    var lineNum;
+    var layer = 3;
+    var runTime = 100;
+    var layerNum = Math.floor(length / layer);
+    var leftX = (clientVisibleWidth - (length - 2 * layerNum + 1) * radium) / 2;
+    var topY = (clientVisibleHeight - (layer + 1) * radium) / 2;
+    for (var j = 0; j < length; j++) {
+        var c = new Circle(Math.floor(clientVisibleWidth * Math.random()), Math.floor(clientVisibleHeight * Math.random()), radium);
+        if (j >= 0 && j < layerNum) {
+            lineNum = layerNum - 1;
+            c.destX = leftX + radium + (j + 1) * radium;
+            c.destY = topY + radium;
+        } else if (j >= layerNum && j < layerNum * 2) {
+            lineNum = length - layerNum * 2 - 1;
+            c.destX = leftX + radium + (j - layerNum + 1) * radium;
+            c.destY = topY + 3 * radium;
+        } else {
+            lineNum = length - layerNum * 2 - 1;
+            c.destX = leftX + (j - layerNum * 2 + 1) * radium;
+            c.destY = topY + 2 * radium;
+        }
+        c.vx = (c.destX - c.x) / runTime;
+        c.vy = (c.destY - c.y) / runTime;
+        c.alpha = 0.5;
+        carray[j] = c;
     }
-    drawWord();
+
+    drawAll();
 }
 
+function drawAll() {
+    repaint();
+    drawWord();
+    rotatingAndMoveSnows();
+    window.setTimeout(drawAll, 1000 / 30);
+}
 function rotatingAndMoveSnows() {
     var rotateSnowAngle = Math.PI / 180;
-    repaint();
-
     for (var i = 1; i <= snowPool.length; i++) {
 //        moveObject(snowPool[i - 1]);
         rotateObject(snowPool[i - 1], rotateSnowAngle);
         moveObject(snowPool[i - 1]);
         drawSnow(snowPool[i - 1]);
     }
-    window.setTimeout(rotatingAndMoveSnows, 1000 / 24);
 }
 
 function moveObject(snow) {
@@ -86,7 +113,7 @@ function rotateSkeleton(skeleton, realAngle) {
         var point = points[j];
         var x1 = skeleton.positionX, y1 = skeleton.positionY;
         var x2 = point.positionX, y2 = point.positionY;
-        var x3, y3, beta;
+        var beta;
         var radius = Math.sqrt(Math.pow((y2 - y1), 2) + Math.pow((x2 - x1), 2));
         var asinValue = Math.asin((y2 - y1) / radius);
         var theta = (x2 - x1) < 0 ? (Math.PI - asinValue) : (asinValue);
@@ -102,11 +129,10 @@ function rotateSkeleton(skeleton, realAngle) {
 
 function drawSnow(snow) {
     myContext.strokeStyle = "#FFF";
-    myContext.fillStyle = "#FFF"
+    myContext.fillStyle = "#FFF";
     myContext.shadowBlur = 0;
     myContext.globalAlpha = snow.alpha;
     myContext.beginPath();
-    var skeleton = snow.skeleton[0].pointArray;
     for (var i = 0; i < snow.skeleton.length; i++) {
         var pointArray = snow.skeleton[i].pointArray;
         for (var j = 0; j < pointArray.length; j++) {
@@ -121,15 +147,17 @@ function drawSnow(snow) {
 }
 
 function Snow(size) {
-    var snow = new Object();
+    var snow = {};
+    snow.destX = null;
+    snow.destY = null;
     snow.size = size;
-    snow.alpha = 0.25;
+    snow.alpha = 0.35;
     snow.positionX = (clientVisibleWidth ) * Math.random();
     snow.positionY = (clientVisibleHeight) * Math.random();
     snow.speedX = 100 * Math.random() / 100 + 0.2;
     snow.speedY = 100 * Math.random() / 100 + 0.2;
     var pentagram = new Pentagram(size, snow.positionX, snow.positionY);
-    var pentagram2 = new Pentagram2(size, snow.positionX, snow.positionY);
+    var pentagram2 = new Pentagram2(size * 1.2, snow.positionX, snow.positionY);
     rotateSkeleton(pentagram2, Math.PI);
     snow.skeleton = [pentagram, pentagram2];
     return snow;
@@ -260,68 +288,24 @@ function Circle(x, y, r) {
     this.x = x;
     this.y = y;
     this.r = r;
-    this.destX = -1;
-    this.destY = -1;
-    this.alpha = 0;
-    this.vx = Math.random() - .5 * 5;
-    this.vy = Math.random() - .5 * 5
+    this.destX = null;
+    this.destY = null;
+    this.alpha = 0.5;
+    this.vx = 0;
+    this.vy = 0;
 }
 
 function drawWord() {
-
-    var nGeneralWindX = Math.sin(Math.random() * 360) * 3;
-    var nGeneralWindY = Math.cos(Math.random() * 360) * 3;
-    var bGravity = false;
-    var bFade = true;
-
     for (var i = 0; i < carray.length; i++) {
         var C = carray[i];
-
-        if (C.destX > -1) {
-            C.x += (C.destX - C.x) / 4 + ((C.destX - C.x) / 90 * C.vx) + nGeneralWindX;
-            C.y += (C.destY - C.y) / 4 + ((C.destY - C.y) / 90 * C.vy) + nGeneralWindY;
-            C.alpha += (.1 - C.alpha) / 2;
-        }
-        else {
-            C.x += C.vx + nGeneralWindX;
-            C.y += C.vy + nGeneralWindY;
-            if (bGravity)
-                C.vy += 1.0;
-            if (bFade)
-                C.alpha *= (.9 + C.alpha) * .98
-            if (C.alpha < 0)C.alpha = 0;
-        }
-
-        nGeneralWindX *= .9999;
-        nGeneralWindY *= .9999;
-
-
-        if (C.x < 0) {
-            C.x = -C.x;
-            C.vx = -C.vx;
-        }
-        if (C.y < 0) {
-            C.y = -C.y;
-            C.vy = -C.vy;
-        }
-        ;
-        if (C.x > clientVisibleWidth) {
-            C.x = clientVisibleWidth - (C.x - clientVisibleWidth);
-            C.vx = -C.vx;
-        }
-        if (C.y > clientVisibleHeight) {
-            C.y = clientVisibleHeight - (C.y - clientVisibleHeight);
-            C.vy = -C.vy * .45;
-        }
-
-
         myContext.globalAlpha = C.alpha;
-        $("#sayWords").html(parseInt($("#sayWords").html()) + 1);
         myContext.beginPath();
         myContext.fillStyle = "#FFF";
+        C.x = Math.abs(C.x - C.destX) <= Math.abs(C.vx) ? C.destX : (C.x + C.vx);
+        C.y = Math.abs(C.y - C.destY) <= Math.abs(C.vy) ? C.destY : (C.y + C.vy);
         myContext.arc(C.x, C.y, C.r, 0, Math.PI * 2, true);
         myContext.closePath();
         myContext.fill();
     }
-    window.setTimeout(drawWord, 1000);
+
 }
