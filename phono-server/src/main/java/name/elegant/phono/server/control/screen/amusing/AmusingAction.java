@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,21 +24,19 @@ import java.util.Map;
  * E-mail:flyhzq@sina.com
  */
 @Controller
-@RequestMapping("/amusing/index.html")
+@RequestMapping("/amusing/index.crab")
 public class AmusingAction {
 
     @Resource
     private IpAddressDAO ipAddressDAO;
 
     private final int ACCESS_LOG_SECTION_IP = 0;
+    private String logsContent;
 
     @RequestMapping
     public ModelAndView execute() {
         Map<String, IpLogVO> ipMap = new HashMap<String, IpLogVO>();
-        String accessContent = FileReaderUtil.readTextFile("/var/log/apache2/access.log");
-        accessContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.1");
-        accessContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.2");
-        accessContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.3");
+        String accessContent = getLogsContent();
         String[] lines = accessContent.split("\n");
         for (int i = 0; i < lines.length; i++) {
             String[] sections = lines[i].split(" ");
@@ -44,7 +44,7 @@ public class AmusingAction {
             String address = this.queryAddress(ip);
             ipMap.put(ip, new IpLogVO(ip, address, 0));
         }
-        return new ModelAndView("asuming/index", "ipMap", ipMap);
+        return new ModelAndView("amusing/index", "ipMap", ipMap);
     }
 
 
@@ -59,4 +59,25 @@ public class AmusingAction {
         return address;
     }
 
+    public String getLogsContent() {
+        String logsContent = "";
+        String name = "";
+        try {
+            name = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        if (name.contains("TAOBAO")) {
+            logsContent = FileReaderUtil.readTextFile("C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log");
+            logsContent += FileReaderUtil.readTextFile("C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log.1");
+            logsContent += FileReaderUtil.readTextFile("C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log.2");
+            logsContent += FileReaderUtil.readTextFile("C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log.3");
+        } else {
+            logsContent = FileReaderUtil.readTextFile("/var/log/apache2/access.log");
+            logsContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.1");
+            logsContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.2");
+            logsContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.3");
+        }
+        return logsContent;
+    }
 }

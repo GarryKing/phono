@@ -5,6 +5,6 @@
 </head>
 
 <body>
-
+${ipMap}.size()
 </body>
 </html>
