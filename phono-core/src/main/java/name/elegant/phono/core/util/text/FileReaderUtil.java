@@ -18,6 +18,8 @@ public class FileReaderUtil {
             String tempLine = "";
             inputFile = new BufferedReader(new FileReader(path));
             while ((tempLine = inputFile.readLine()) != null) {
+                if (tempLine.equals(""))
+                    continue;
                 result += tempLine + "\n";
             }
             inputFile.close();

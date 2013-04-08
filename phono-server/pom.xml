@@ -74,7 +74,7 @@
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
-            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+            <artifactId>jstl</artifactId>
         </dependency>
 
         <!--===================================-->

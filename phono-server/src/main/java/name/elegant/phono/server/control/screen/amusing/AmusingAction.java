@@ -41,14 +41,19 @@ public class AmusingAction {
         for (int i = 0; i < lines.length; i++) {
             String[] sections = lines[i].split(" ");
             String ip = sections[ACCESS_LOG_SECTION_IP];
+            if (ip == null || !ip.contains("."))
+                continue;
             String address = this.queryAddress(ip);
             ipMap.put(ip, new IpLogVO(ip, address, 0));
+            break;
         }
         return new ModelAndView("amusing/index", "ipMap", ipMap);
     }
 
 
     private String queryAddress(String tempIp) {
+        if (tempIp == null || !tempIp.contains("."))
+            return "";
         String address = null;
         address = ipAddressDAO.queryAddressByIp(tempIp);
         if (address == null) {
@@ -62,21 +67,21 @@ public class AmusingAction {
     public String getLogsContent() {
         String logsContent = "";
         String name = "";
+        String fileName = "";
         try {
             name = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         if (name.contains("TAOBAO")) {
-            logsContent = FileReaderUtil.readTextFile("C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log");
-            logsContent += FileReaderUtil.readTextFile("C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log.1");
-            logsContent += FileReaderUtil.readTextFile("C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log.2");
-            logsContent += FileReaderUtil.readTextFile("C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log.3");
+            fileName = "C:\\Documents and Settings\\zeqing.hzq\\桌面\\history ali log\\access.log";
+        } else if (name.contains("Garry")) {
+            fileName = "E:\\360data\\重要数据\\桌面\\log\\access.log";
         } else {
-            logsContent = FileReaderUtil.readTextFile("/var/log/apache2/access.log");
-            logsContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.1");
-            logsContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.2");
-            logsContent += FileReaderUtil.readTextFile("/var/log/apache2/access.log.3");
+            fileName = "/var/log/apache2/access.log";
+        }
+        for (int i = 0; i < 3; i++) {
+            logsContent = FileReaderUtil.readTextFile(fileName + (i == 0 ? "" : "." + i));
         }
         return logsContent;
     }
