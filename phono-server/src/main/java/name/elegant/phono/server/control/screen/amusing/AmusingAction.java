@@ -47,7 +47,7 @@ public class AmusingAction {
             ipMap.put(ip, new IpLogVO(ip, address, 0));
             break;
         }
-        return new ModelAndView("amusing/index", "ipMap", ipMap);
+        return new ModelAndView("amusing/index", "ipMap", "hello");
     }
 
 
