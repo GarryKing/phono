@@ -38,7 +38,7 @@
             </dependency>
 
             <!--===================================-->
-            <!-- SSI框架/junit -->
+            <!-- SI框架/junit -->
             <!--===================================-->
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -100,9 +100,14 @@
                 <version>2.2</version>
             </dependency>
             <dependency>
-                <groupId>javax.servlet.jsp.jstl</groupId>
+                <groupId>javax.servlet</groupId>
                 <artifactId>jstl</artifactId>
-                <version>1.2</version>
+                <version>1.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>taglibs</groupId>
+                <artifactId>standard</artifactId>
+                <version>1.1.2</version>
             </dependency>
 
             <!--===================================-->
@@ -139,6 +144,16 @@
 
         </dependencies>
     </dependencyManagement>
+
+
+    <repositories>
+        <repository>
+            <id>JBoss</id>
+            <name>JBoss Repsitory</name>
+            <layout>default</layout>
+            <url>http://repository.jboss.org/maven2</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

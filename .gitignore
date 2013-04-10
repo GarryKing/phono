@@ -5,3 +5,8 @@ target/
 .idea/
 *.iml
 Thumbs.db
+
+#eclipse files#
+.project
+.classpath
+.settings
