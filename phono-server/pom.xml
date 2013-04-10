@@ -85,6 +85,22 @@
             <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
 
+        <!--===================================-->
+        <!-- velocity -->
+        <!--===================================-->
+        <dependency>
+            <groupId>velocity</groupId>
+            <artifactId>velocity</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>velocity</groupId>
+            <artifactId>velocity-dep</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>velocity-tools</groupId>
+            <artifactId>velocity-tools</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
