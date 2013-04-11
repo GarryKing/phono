@@ -1,4 +1,4 @@
-package name.elegant.phono.server.control;
+package name.elegant.phono.server.control.screen.user;
 
 import name.elegant.phono.core.admin.dao.IpAddressDAO;
 import name.elegant.phono.core.util.net.NetConnection;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
  * E-mail:flyhzq@sina.com
  */
 @Controller
-@RequestMapping("/welcome.crab")
-public class WelcomeAction {
+@RequestMapping("/user")
+public class UserAction {
 
     @Resource
     private IpAddressDAO ipAddressDAO;

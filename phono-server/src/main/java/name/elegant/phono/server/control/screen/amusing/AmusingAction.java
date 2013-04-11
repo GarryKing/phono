@@ -24,7 +24,7 @@ import java.util.Map;
  * E-mail:flyhzq@sina.com
  */
 @Controller
-@RequestMapping("/amusing/index.crab")
+@RequestMapping("/amusing/index.html")
 public class AmusingAction {
 
     @Resource
@@ -47,7 +47,7 @@ public class AmusingAction {
             ipMap.put(ip, new IpLogVO(ip, address, 0));
             break;
         }
-        return new ModelAndView("amusing/index", "ipMap", "hello");
+        return new ModelAndView("amusing/logManager", "ipMap", ipMap);
     }
 
 
@@ -81,7 +81,7 @@ public class AmusingAction {
             fileName = "/var/log/apache2/access.log";
         }
         for (int i = 0; i < 3; i++) {
-            logsContent = FileReaderUtil.readTextFile(fileName + (i == 0 ? "" : "." + i));
+            logsContent += FileReaderUtil.readTextFile(fileName + (i == 0 ? "" : "." + i));
         }
         return logsContent;
     }

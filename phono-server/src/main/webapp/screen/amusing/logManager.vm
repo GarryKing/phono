@@ -5,6 +5,6 @@
 </head>
 
 <body>
-    $ipMap
+    $ipMap.size()
 </body>
 </html>
