@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Author: Garry King
@@ -23,10 +24,8 @@ public class UserAction {
     @Resource
     private IpAddressDAO ipAddressDAO;
 
-    @RequestMapping
-    public ModelAndView testDoIt() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes()).getRequest();
+    @RequestMapping("/login.html")
+    public ModelAndView login(HttpServletRequest request,HttpServletResponse response) {
         String currIp = request.getRemoteAddr();
         String address = ipAddressDAO.queryAddressByIp(currIp);
         if (address == null || address.equals("")) {
@@ -34,8 +33,8 @@ public class UserAction {
             address = NetConnection.getSubStringWithTag(query, "：", "</td>");
             ipAddressDAO.insertNewIpAddress(currIp, address);
         }
-        String result = "您好，来自 " + address + " 的朋友，您的ip是：" + currIp;
-        return new ModelAndView("user/logined", "result", result);
+        String result = "您好，来自" + address + "的朋友，您的ip是：" + currIp;
+        return new ModelAndView("user/login", "result", result);
     }
 
 }

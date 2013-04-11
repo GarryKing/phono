@@ -21,9 +21,17 @@
         <property name="cache" value="true"/>
         <property name="prefix" value=""/>
         <property name="suffix" value=".vm"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="contentType" value="text/html;charset=GBK"/>
     </bean>
     <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="resourceLoaderPath" value="/screen/"/>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">gbk</prop>
+                <prop key="output.encoding">gbk</prop>
+            </props>
+        </property>
     </bean>
 
     <!--json配置-->
