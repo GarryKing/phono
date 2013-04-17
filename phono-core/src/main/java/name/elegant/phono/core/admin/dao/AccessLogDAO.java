@@ -1,6 +1,6 @@
 package name.elegant.phono.core.admin.dao;
 
-import name.elegant.phono.client.dataobject.AccessLogDO;
+import name.elegant.phono.client.dataobject.admin.AccessLogDO;
 
 import java.util.List;
 

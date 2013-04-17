@@ -50,7 +50,6 @@ public class AmusingAction {
         return new ModelAndView("amusing/logManager", "ipMap", ipMap);
     }
 
-
     private String queryAddress(String tempIp) {
         if (tempIp == null || !tempIp.contains("."))
             return "";

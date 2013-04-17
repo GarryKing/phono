@@ -8,5 +8,6 @@
 
     <sqlMap resource="sqlmap/access_log_sql_map.xml"/>
     <sqlMap resource="sqlmap/ip_address_sql_map.xml"/>
+    <sqlMap resource="sqlmap/picture_sql_map.xml"/>
 
 </sqlMapConfig>

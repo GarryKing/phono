@@ -1,4 +1,4 @@
-package name.elegant.phono.client.dataobject;
+package name.elegant.phono.client.dataobject.admin;
 
 import java.util.Date;
 

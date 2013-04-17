@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="phono">
+
+    <!--===================================-->
+    <!-- 别名定义 -->
+    <!--===================================-->
+    <typeAlias alias="pictureDO" type="name.elegant.phono.client.dataobject.redcrab.PictureDO"/>
+
+    <!--===================================-->
+    <!-- 数据库字段关联DataObject -->
+    <!--===================================-->
+    <resultMap id="pictureResult" class="pictureDO">
+        <result column="pic_id" property="picId"/>
+        <result column="source_url" property="sourceUrl"/>
+        <result column="description" property="description"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <!--===================================-->
+    <!-- 常用SQL字段 -->
+    <!--===================================-->
+    <sql id="select.picture.all">
+        pic_id,
+        source_url,
+        description,
+        gmt_create,
+        gmt_modify
+    </sql>
+
+    <!--===================================-->
+    <!-- Select语句 -->
+    <!--===================================-->
+    <select id="PictureDAO.queryAllPictureDO" parameterClass="String" resultMap="pictureResult">
+        SELECT
+        *
+        FROM #tableName#
+    </select>
+
+</sqlMap>

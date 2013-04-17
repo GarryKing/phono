@@ -1,4 +1,4 @@
-package name.elegant.phono.core.admin.dao;
+package name.elegant.phono.core.common.dao;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;

@@ -1,6 +1,6 @@
 package name.elegant.phono.core.admin.dao.impl;
 
-import name.elegant.phono.core.admin.dao.BaseDao;
+import name.elegant.phono.core.common.dao.BaseDao;
 import name.elegant.phono.core.admin.dao.IpAddressDAO;
 import org.springframework.stereotype.Repository;
 

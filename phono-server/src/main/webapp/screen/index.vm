@@ -1,0 +1,14 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gbk"/>
+    <title>红螃蟹 首页</title>
+</head>
+<body>
+    #foreach($pic in $picList)
+    <script>window.sc = "<img src='$pic.sourceUrl?" + Math.random() + "'>";</script>
+    <iframe id="imiframe" src="javascript:parent.sc" style="border:none; overflow: hidden;" scrolling="no"
+            frameborder="0"
+            onload="javascript:var x=document.getElementById('imiframe').contentWindow.document.images[0];this.width=x.width+10;this.height=x.height+10;"></iframe>
+    #end
+</body>
+</html>

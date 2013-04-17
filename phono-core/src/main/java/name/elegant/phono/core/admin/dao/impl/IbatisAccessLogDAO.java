@@ -1,8 +1,8 @@
 package name.elegant.phono.core.admin.dao.impl;
 
-import name.elegant.phono.client.dataobject.AccessLogDO;
+import name.elegant.phono.client.dataobject.admin.AccessLogDO;
 import name.elegant.phono.core.admin.dao.AccessLogDAO;
-import name.elegant.phono.core.admin.dao.BaseDao;
+import name.elegant.phono.core.common.dao.BaseDao;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
