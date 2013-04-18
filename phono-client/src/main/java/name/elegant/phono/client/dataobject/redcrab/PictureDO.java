@@ -7,7 +7,7 @@ import java.util.Date;
  * Date: 13-4-17
  * Time: обнГ11:25
  */
-public class tureDO {
+public class PictureDO {
 
     private Long picId;
 
