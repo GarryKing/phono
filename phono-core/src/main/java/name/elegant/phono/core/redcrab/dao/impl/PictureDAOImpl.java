@@ -5,6 +5,7 @@ import name.elegant.phono.core.common.dao.BaseDao;
 import name.elegant.phono.core.redcrab.dao.PictureDAO;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +18,12 @@ public class PictureDAOImpl extends BaseDao implements PictureDAO {
 
     @Override
     public List<PictureDO> queryAllPictureDO() {
-        String tableName = "picture";
-        List<PictureDO> list = null;
-        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableName + "0001"));
-        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableName + "0002"));
-        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableName + "0003"));
-        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableName + "0000"));
-        return list;
+        String tableNamePrefix = "picture_";
+        List<PictureDO> list = new ArrayList<PictureDO>();
+        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "0001"));
+        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "0002"));
+        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "0003"));
+        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "0000"));
+        return list.isEmpty() ? null : list;
     }
 }

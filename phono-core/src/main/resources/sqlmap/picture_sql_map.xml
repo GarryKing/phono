@@ -35,7 +35,7 @@
     <select id="PictureDAO.queryAllPictureDO" parameterClass="String" resultMap="pictureResult">
         SELECT
         *
-        FROM #tableName#
+        FROM $tableName$
     </select>
 
 </sqlMap>
