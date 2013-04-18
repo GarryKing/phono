@@ -2,24 +2,31 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gbk"/>
     <title>红螃蟹 首页</title>
-    <link type="text/css" href="../css/redcrab.css">
+    <link rel="stylesheet" type="text/css" href="../css/redcrab.css">
     <script type="text/javascript" src="../js/redcrab.js"></script>
 </head>
 <body>
+<div class="top">
+
+</div>
+<div class="holder"></div>
+<div class="content" style="height: 1000px;">
+
     #foreach($pic in $picList)
+        <script>window.sc = "<img src='$pic.sourceUrl?" + Math.random() + "' width=212px>";</script>
+        <iframe id="imiframe" src="javascript:parent.sc" style="border:none; overflow: hidden;" scrolling="no"
+                frameborder="0"
+                onload="javascript:var x=document.getElementById('imiframe').contentWindow.document.images[0];this.width=x.width+10;this.height=x.height+10;"></iframe>
+    #end
+
+</div>
+
+
+    #*#foreach($pic in $picList)
     <script>window.sc = "<img src='$pic.sourceUrl?" + Math.random() + "'>";</script>
     <iframe id="imiframe" src="javascript:parent.sc" style="border:none; overflow: hidden;" scrolling="no"
             frameborder="0"
             onload="javascript:var x=document.getElementById('imiframe').contentWindow.document.images[0];this.width=x.width+10;this.height=x.height+10;"></iframe>
-    #end
-<div class="top">
-
-</div>
-<div class="holder">
-
-</div>
-<div class="content">
-
-</div>
+    #end*#
 </body>
 </html>
