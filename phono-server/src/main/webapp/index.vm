@@ -2,8 +2,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gbk"/>
     <title>红螃蟹 首页</title>
-    <link rel="stylesheet" type="text/css" href="../css/redcrab.css">
-    <script type="text/javascript" src="../js/redcrab.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/redcrab/redcrab.css">
+    <script type="text/javascript" src="js/redcrab.js"></script>
 </head>
 <body>
 <div class="top">
