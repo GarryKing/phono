@@ -1,7 +1,12 @@
-/**
- * Created with IntelliJ IDEA.
- * User: Administrator
- * Date: 13-4-18
- * Time: обнГ10:37
- * To change this template use File | Settings | File Templates.
- */
+$(function(){
+    $.ajax({
+        url: "redcrab/json/indexImage.crab",
+        dataType: "json",
+        success:function(data){
+            alert(data[0]alert();.sourceUrl);
+        },
+        error: function(){
+
+        }
+    });
+})

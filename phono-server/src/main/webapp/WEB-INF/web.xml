@@ -43,7 +43,7 @@
 
 
     <servlet>
-        <servlet-name>springMVCTest</servlet-name>
+        <servlet-name>screenServlert</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -52,8 +52,8 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>springMVCTest</servlet-name>
-        <url-pattern>/screen/*</url-pattern>
+        <servlet-name>screenServlert</servlet-name>
+        <url-pattern>/redcrab/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

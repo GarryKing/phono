@@ -1,4 +1,4 @@
-package name.elegant.phono.server.control.login;
+package name.elegant.phono.server.control.json;
 
 import name.elegant.phono.core.admin.dao.IpAddressDAO;
 import name.elegant.phono.core.util.net.NetConnection;

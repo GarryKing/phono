@@ -26,6 +26,6 @@ public class IndexAction {
     @RequestMapping
     public ModelAndView showPicture(HttpServletRequest request, HttpServletResponse response) {
         List<PictureDO> picList = pictureDAO.queryAllPictureDO();
-        return new ModelAndView("index", "picList", picList);
+        return new ModelAndView("/index.vm", "picList", picList);
     }
 }
