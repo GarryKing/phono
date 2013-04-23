@@ -30,7 +30,7 @@ public class IndexJson {
 
     @RequestMapping(value = "/indexImage.crab", method = RequestMethod.GET)
     @ResponseBody
-    public Object testDoIt(HttpServletResponse response) throws IOException {
+    public Object testDoIt() throws IOException {
         List<PictureDO> picList = pictureDAO.queryAllPictureDO();
         return picList;
     }
