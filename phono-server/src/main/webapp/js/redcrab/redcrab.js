@@ -9,6 +9,8 @@ function initGlobalParameter() {
     clientVisibleHeight = document.body.clientHeight;
     imageDivWidth = 234;
     imageDivMargin = 8;
+    imageDivPadding = 10;
+    imageDivContentWidth = imageDivWidth - imageDivPadding * 2;
     columnNumber = Math.floor(clientVisibleWidth % (imageDivWidth + imageDivMargin * 2));
 }
 
@@ -41,11 +43,14 @@ function loadImages() {
 
     function setImageCss(order) {
         var frame = document.getElementById("image_" + order).getElementsByTagName("iframe")[0];
-        var frameDoc = frame.contentWindow.document;
-        frame.onload = "javascript:var x=document.getElementByIdgetElementById('image_" + order + "').getElementsByTagName('iframe')[0].contentWindow.document.images[0];this.width=x.width;this.height=x.height;";
-        frameDoc.body.style.margin = "0px";
-        frameDoc.images[0].width = "214";
-//        currIframe.height=currDocument.images[0].height;
+        var frameContent = $(frame).contents();
+        frameContent.find("body").css("margin", "0");
+        var img = $(frameContent.find("img"));
+        img.css("width", imageDivContentWidth);
+        $(frame.contentWindow).load(function () {
+            $(frame).css("height", img.height());
+            $("#image_" + order).css("height", img.height());
+        });
     }
 }
 
