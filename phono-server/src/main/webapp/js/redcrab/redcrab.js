@@ -13,9 +13,7 @@ function initGlobalParameter() {
 }
 
 function initContent() {
-    $("#content").ajaxStop(function(){
-        $("#content").append("Ω· ¯¡À")
-    });
+
 }
 
 function loadImages() {
@@ -24,8 +22,7 @@ function loadImages() {
         dataType: "json",
         success: function (data) {
             for (var i = 0; i < data.length; i++) {
-                var str = createImageDiv(i, data[i]);
-                $("#content").append(str);
+                createImageDiv(i, data[i]);
                 setImageCss(i);
             }
         },
@@ -36,17 +33,18 @@ function loadImages() {
 
     function createImageDiv(order, data) {
         window.sc = "<img src=" + data.sourceUrl + "?" + Math.random() + ">";
-        return "<div id='image_" + order + "' class='image_wrapper'>"
+        var content = "<div id='image_" + order + "' class='image_wrapper'>"
             + "<iframe scrolling='no' src='javascript:parent.sc'></iframe>"
             + "</div>";
+        $("#content").append(content);
     }
 
-    function setImageCss(order){
-        var currIframe = document.getElementById("image_"+order).getElementsByTagName("iframe")[0];
-        var currDocument = currIframe.contentWindow.document;
-        currIframe.onload= "javascript:var x=document.getElementById('image_"+order+"').getElementsByTagName('iframe')[0].contentWindow.document.images[0];this.width=x.width;this.height=x.height;";
-        currDocument.body.style.margin="0px";
-        currDocument.images[0].width="214";
+    function setImageCss(order) {
+        var frame = document.getElementById("image_" + order).getElementsByTagName("iframe")[0];
+        var frameDoc = frame.contentWindow.document;
+        frame.onload = "javascript:var x=document.getElementByIdgetElementById('image_" + order + "').getElementsByTagName('iframe')[0].contentWindow.document.images[0];this.width=x.width;this.height=x.height;";
+        frameDoc.body.style.margin = "0px";
+        frameDoc.images[0].width = "214";
 //        currIframe.height=currDocument.images[0].height;
     }
 }
