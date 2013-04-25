@@ -23,12 +23,16 @@ body {
     background: url("../../img/redcrab/content-holder.png") repeat-x;
 }
 
+.image_ul {
+    list-style: none;
+    float: left;
+}
+
 .image_wrapper {
     background-color: white;
-    margin: 8px;
+    margin: 16px 8px;
     padding: 10px 0px;
     width: 234px;
-    float: left;
     text-align: center;
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
