@@ -15,10 +15,11 @@ function initGlobalParameter() {
 }
 
 function initBaseContent() {
+    var content = $("#content_images");
     for (var i = 0; i < columnNumber; i++) {
-        $("#content_images").append("<ul id='image_ul_" + i + "' class='image_ul'></ul>");
+        content.append("<ul id='image_ul_" + i + "' class='image_ul'></ul>");
     }
-    $("#content_images").css("width", (imageDivWidth + imageDivMargin * 2) * columnNumber)
+    content.css("width", (imageDivWidth + imageDivMargin * 2) * columnNumber)
         .css("margin", "0 auto");
     $(".image_ul").css("width", imageDivWidth)
         .css("margin", "0px " + imageDivMargin).css("padding", 0);
@@ -41,7 +42,7 @@ function loadImages() {
 
     function createImageDiv(data) {
         window.sc = "<img src=" + data.sourceUrl + "?" + Math.random() + ">";
-        var content = "<div class='image_wrapper image_" + data.picId + "' style='display:;'>"
+        var content = "<div class='image_wrapper image_" + data.picId + "' style='display:none;'>"
             + "<iframe scrolling='no' src='javascript:parent.sc'></iframe>"
             + "</div>";
         $("#image_cache").append(content);
@@ -55,23 +56,23 @@ function loadImages() {
         var img = $(frameContent.find("img"));
         img.css("width", imageDivContentWidth);
         $(frame.contentWindow).load(function () {
-            var content = "<li><div class='image_wrapper clearfix image_" + data.picId + "'></div></li>";
+            var content = "<li><div class='image_wrapper image_" + data.picId + "'></div></li>";
             var column = getShortestList();
             $("#image_ul_" + column).append(content);
-            $("#image_ul_" + column + " li " + currClass).append(img);
-//            $("#content_images " + currClass).append(img);
-//            $("#image_cache " + currClass).remove();
+            var newImageDiv = $("#image_ul_" + column + " li " + currClass);
             $(currClass).css("height", img.height());
-            /* $(currId).display();*/
+            newImageDiv.append(img);
+            $("#image_cache " + currClass).remove();
+//            $("#holder").append(img.height() + "¡¢");
         });
     }
 }
 
 function getShortestList() {
     var shortestId = Math.floor(columnNumber * Math.random());
-    var shortestHeight = 0, tempHeight = 0;
+    var shortestHeight = $("#image_ul_" + shortestId).height(), tempHeight = 0;
     for (var i = 0; i < columnNumber; i++) {
-        tempHeight = $("#image_ul_" + i).css("height");
+        tempHeight = $("#image_ul_" + i).height();
         if (tempHeight <= shortestHeight) {
             shortestHeight = tempHeight;
             shortestId = i;
