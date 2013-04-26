@@ -45,24 +45,32 @@ function loadImages() {
         var content = "<div class='image_wrapper image_" + data.picId + "' style='display:none;'>"
             + "<iframe scrolling='no' src='javascript:parent.sc'></iframe>"
             + "</div>";
+        var content_2 = "<div><div class='image_wrapper image_" + data.picId + "' style='display:;'></div></div>";
         $("#image_cache").append(content);
+        var frame = document.getElementById("image_cache_iframe");
+        var frameBody = $(frame).contents().find("body");
+        frameBody.append(content_2);
+        frameBody.find(".image_" + data.picId).append(window.sc);
     }
 
     function setImageCss(data) {
         var currClass = ".image_" + data.picId;
-        var frame = document.getElementsByClassName("image_" + data.picId)[0].getElementsByTagName("iframe")[0];
+//        var frame = document.getElementsByClassName("image_" + data.picId)[0].getElementsByTagName("iframe")[0];
+        var frame = document.getElementById("image_cache_iframe");
         var frameContent = $(frame).contents();
-        frameContent.find("body").css("margin", "0");
-        var img = $(frameContent.find("img"));
+//        frameContent.find("body").css("margin", "0");
+        var img = frameContent.find(currClass);
         img.css("width", imageDivContentWidth);
-        $(frame.contentWindow).load(function () {
-            var content = "<li><div class='image_wrapper image_" + data.picId + "'></div></li>";
+        $(img).load(function () {
+//            var content = "<li><div class='image_wrapper image_" + data.picId + "'></div></li>";
+            var content = img.parent().parent().html();
             var column = getShortestList();
             $("#image_ul_" + column).append(content);
             var newImageDiv = $("#image_ul_" + column + " li " + currClass);
             $(currClass).css("height", img.height());
             newImageDiv.append(img);
-            $("#image_cache " + currClass).remove();
+//            $("#image_cache " + currClass).remove();
+//            $("#image_cache_iframe ").children().remove();
 //            $("#holder").append(img.height() + "¡¢");
         });
     }
