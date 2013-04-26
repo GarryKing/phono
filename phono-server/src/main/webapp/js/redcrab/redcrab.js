@@ -45,7 +45,7 @@ function loadImages() {
         var content = "<div class='image_wrapper image_" + data.picId + "' style='display:none;'>"
             + "<iframe scrolling='no' src='javascript:parent.sc'></iframe>"
             + "</div>";
-        var content_2 = "<div><div class='image_wrapper image_" + data.picId + "' style='display:;'></div></div>";
+        var content_2 = "<div><li><div class='image_wrapper image_" + data.picId + "' style='display:;'></div></li></div>";
         $("#image_cache").append(content);
         var frame = document.getElementById("image_cache_iframe");
         var frameBody = $(frame).contents().find("body");
@@ -60,15 +60,18 @@ function loadImages() {
         var frameContent = $(frame).contents();
 //        frameContent.find("body").css("margin", "0");
         var img = frameContent.find(currClass);
-        img.css("width", imageDivContentWidth);
-        $(img).load(function () {
+        img.find("img").css("width", imageDivContentWidth);
+        img.load(function () {
+            $("#holder").append(data.picId+"/")
 //            var content = "<li><div class='image_wrapper image_" + data.picId + "'></div></li>";
-            var content = img.parent().parent().html();
+            var content_2 = img.parent().parent().html();
+//            $("#holder").append(content);
+
+//            $(currClass).css("height", img.find("img").height());
             var column = getShortestList();
-            $("#image_ul_" + column).append(content);
+            $("#image_ul_" + column).append(content_2);
             var newImageDiv = $("#image_ul_" + column + " li " + currClass);
-            $(currClass).css("height", img.height());
-            newImageDiv.append(img);
+//            newImageDiv.append(img);
 //            $("#image_cache " + currClass).remove();
 //            $("#image_cache_iframe ").children().remove();
 //            $("#holder").append(img.height() + "¡¢");
