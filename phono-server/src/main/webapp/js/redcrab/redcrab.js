@@ -2,6 +2,9 @@ $(function () {
     initGlobalParameter();
     initBaseContent();
     loadImages();
+    $(window).resize(function () {
+        reSortImages();
+    })
 });
 
 function initGlobalParameter() {
@@ -12,6 +15,7 @@ function initGlobalParameter() {
     imageDivPadding = 10;
     imageDivContentWidth = imageDivWidth - imageDivPadding * 2;
     columnNumber = Math.floor(clientVisibleWidth / (imageDivWidth + imageDivMargin * 2));
+    imageCacheSize = 0;
 }
 
 function initBaseContent() {
@@ -30,9 +34,10 @@ function loadImages() {
         url: "redcrab/json/indexImage.crab",
         dataType: "json",
         success: function (data) {
+            createCacheNewIframe();
+            imageCacheSize = data.length;
             for (var i = 0; i < data.length; i++) {
                 createImageDiv(data[i]);
-                setImageCss(data[i]);
             }
         },
         error: function () {
@@ -40,42 +45,29 @@ function loadImages() {
         }
     });
 
-    function createImageDiv(data) {
-        window.sc = "<img src=" + data.sourceUrl + "?" + Math.random() + ">";
-        var content = "<div class='image_wrapper image_" + data.picId + "' style='display:none;'>"
-            + "<iframe scrolling='no' src='javascript:parent.sc'></iframe>"
-            + "</div>";
-        var content_2 = "<div><li><div class='image_wrapper image_" + data.picId + "' style='display:;'></div></li></div>";
-        $("#image_cache").append(content);
-        var frame = document.getElementById("image_cache_iframe");
-        var frameBody = $(frame).contents().find("body");
-        frameBody.append(content_2);
-        frameBody.find(".image_" + data.picId).append(window.sc);
+    function createCacheNewIframe() {
+        $("body").append("<iframe id='image_cache_iframe' style='display:none;'></iframe>");
     }
 
-    function setImageCss(data) {
-        var currClass = ".image_" + data.picId;
-//        var frame = document.getElementsByClassName("image_" + data.picId)[0].getElementsByTagName("iframe")[0];
+    function createImageDiv(data) {
+        window.sc = "<img src=" + data.sourceUrl + "?" + Math.random() + ">";
+        var content = "<div><li><div class='image_wrapper image_" + data.picId + "' style='display:;'></div></li></div>";
         var frame = document.getElementById("image_cache_iframe");
-        var frameContent = $(frame).contents();
-//        frameContent.find("body").css("margin", "0");
-        var img = frameContent.find(currClass);
-        img.find("img").css("width", imageDivContentWidth);
-        img.load(function () {
-            $("#holder").append(data.picId+"/")
-//            var content = "<li><div class='image_wrapper image_" + data.picId + "'></div></li>";
-            var content_2 = img.parent().parent().html();
-//            $("#holder").append(content);
+        var frameBody = $(frame).contents().find("body");
+        frameBody.append(content);
+        frameBody.find(".image_" + data.picId).append(window.sc);
+        var img = frame.contentDocument.getElementsByClassName("image_" + data.picId)[0].getElementsByTagName("img")[0];
+        $(img).width(imageDivWidth - 2 * imageDivPadding)
+        img.onload = function () {
+            $(img).parent().css("height", $(img).height());
+            var copy = $(img).parent().parent().parent().html();
+            $("#image_ul_" + getShortestList()).append(copy);
+            imageCacheSize--;
+            if (imageCacheSize == 0) {
+                $("#image_cache_iframe").remove();
+            }
 
-//            $(currClass).css("height", img.find("img").height());
-            var column = getShortestList();
-            $("#image_ul_" + column).append(content_2);
-            var newImageDiv = $("#image_ul_" + column + " li " + currClass);
-//            newImageDiv.append(img);
-//            $("#image_cache " + currClass).remove();
-//            $("#image_cache_iframe ").children().remove();
-//            $("#holder").append(img.height() + "¡¢");
-        });
+        }
     }
 }
 
@@ -90,4 +82,9 @@ function getShortestList() {
         }
     }
     return shortestId;
+}
+
+function reSortImages() {
+    initGlobalParameter();
+    alert(1);
 }
