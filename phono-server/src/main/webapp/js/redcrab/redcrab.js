@@ -57,7 +57,7 @@ function loadImages() {
         frameBody.append(content);
         frameBody.find(".image_" + data.picId).append(window.sc);
         var img = frame.contentDocument.getElementsByClassName("image_" + data.picId)[0].getElementsByTagName("img")[0];
-        $(img).width(imageDivWidth - 2 * imageDivPadding)
+        $(img).width(imageDivWidth - 2 * imageDivPadding);
         img.onload = function () {
             $(img).parent().css("height", $(img).height());
             var copy = $(img).parent().parent().parent().html();
@@ -86,5 +86,5 @@ function getShortestList() {
 
 function reSortImages() {
     initGlobalParameter();
-    alert(1);
+    //alert(1);
 }

@@ -1,11 +1,12 @@
 #login-body {
-    position: absolute;
+    /*position: absolute;*/
+    position: fixed;
     left: 50%;
     top: 50%;
-    width: 602px;
-    height: 372px;
-    margin-top: -196px;
-    margin-left: -311px;
+    width: 396px;
+    height: 360px;
+    margin-top: -180px;
+    margin-left: -198px;
     padding: 10px;
 }
 
@@ -13,17 +14,16 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 622px;
-    height: 392px;
+    width: 100%;
+    height: 382px;
     background-color: rgba(113, 101, 100, 0.6);
     opacity: .4;
 }
 
-#login-wrap {
-    z-index: 2;
+.login-wrap {
     position: relative;
     background-color: #f1f1f1;
-    border: 1px solid #908b8b;
+    z-index: 999;
 }
 
 #login-robot {
@@ -47,4 +47,16 @@
     width: 600px;
     height: 75px;
     overflow: hidden;
+}
+
+
+.login-title {
+    height: 35px;
+    line-height: 35px;
+    padding-left: 10px;
+    border-bottom: 1px solid #ffffff;
+    background: url("../../img/redcrab/header_bg.png") repeat-x;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
 }
