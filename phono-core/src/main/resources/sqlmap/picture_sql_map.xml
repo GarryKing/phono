@@ -34,7 +34,7 @@
     <!--===================================-->
     <select id="PictureDAO.queryAllPictureDO" parameterClass="String" resultMap="pictureResult">
         SELECT
-        *
+        <include refid="select.picture.all"/>
         FROM $tableName$
     </select>
 

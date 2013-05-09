@@ -1,4 +1,4 @@
-ο»Ώ#login-body {
+#login-body {
     /*position: absolute;*/
     position: fixed;
     left: 50%;
@@ -70,7 +70,7 @@
 }
 .login-content form label {
     color: #144264;
-    font-family: "ι»‘δ½“",serif;
+    font-family: "ΊΪΜε",serif;
     font-weight: bold;
     display: inline-block;
     width: 60px;

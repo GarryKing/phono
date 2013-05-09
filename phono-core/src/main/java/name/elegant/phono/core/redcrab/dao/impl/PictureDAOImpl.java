@@ -16,14 +16,20 @@ import java.util.List;
 @Repository
 public class PictureDAOImpl extends BaseDao implements PictureDAO {
 
+    private static final int TABLE_PICTURE_NUMBER = 3;
+
     @Override
+    public void insertNewPicture(PictureDO pictureDO) {
+
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<PictureDO> queryAllPictureDO() {
         String tableNamePrefix = "picture_";
         List<PictureDO> list = new ArrayList<PictureDO>();
-        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "0001"));
-        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "0002"));
-        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "0003"));
-        list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "0000"));
+        for (int i = 0; i < TABLE_PICTURE_NUMBER; i++)
+            list.addAll(getSqlMapClientTemplate().queryForList("PictureDAO.queryAllPictureDO", tableNamePrefix + "000" + i));
         return list.isEmpty() ? null : list;
     }
 }
