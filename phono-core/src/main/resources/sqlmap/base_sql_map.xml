@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="phono">
+
+    <!--===================================-->
+    <!-- Insert语句 -->
+    <!--===================================-->
+    <insert id="Sequence.insertNewSequence" parameterClass="Map">
+        INSERT INTO sequence (
+        logic_name, used_value, gmt_modified
+        )
+        VALUES (
+        #logicTableName#,#value#,now()
+        )
+    </insert>
+
+    <insert id="Sequence.updateSequence" parameterClass="Map">
+        UPDATE sequence
+        SET
+        used_value = #value#,
+        gmt_modified = now()
+        WHERE
+        logic_name = #logicTableName#
+        AND
+        <![CDATA[
+        gmt_modified <#now#
+        ]]>
+    </insert>
+
+    <!--===================================-->
+    <!-- Select语句 -->
+    <!--===================================-->
+    <select id="Sequence.queryLastSequence" parameterClass="String" resultClass="long">
+        SELECT
+        used_value
+        FROM sequence
+        WHERE logic_name = #logicTableName#
+    </select>
+
+</sqlMap>

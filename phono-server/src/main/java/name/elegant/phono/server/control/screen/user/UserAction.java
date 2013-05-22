@@ -1,6 +1,7 @@
 package name.elegant.phono.server.control.screen.user;
 
 import name.elegant.phono.core.admin.dao.IpAddressDAO;
+import name.elegant.phono.core.common.dao.GroupSequence;
 import name.elegant.phono.core.util.net.NetConnection;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,11 @@ public class UserAction {
     @Resource
     private IpAddressDAO ipAddressDAO;
 
+    @Resource
+    private GroupSequence groupSequence;
+
     @RequestMapping("/login.html")
-    public ModelAndView login(HttpServletRequest request,HttpServletResponse response) {
+    public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
         String currIp = request.getRemoteAddr();
         String address = ipAddressDAO.queryAddressByIp(currIp);
         if (address == null || address.equals("")) {
@@ -33,7 +37,7 @@ public class UserAction {
             address = NetConnection.getSubStringWithTag(query, "：", "</td>");
             ipAddressDAO.insertNewIpAddress(currIp, address);
         }
-        String result = "您好，来自" + address + "的朋友，您的ip是：" + currIp;
+        String result = "您好，来自" + address + "的朋友，您的ip是：" + currIp + ",value=" + groupSequence.getNextValue();
         return new ModelAndView("user/login", "result", result);
     }
 

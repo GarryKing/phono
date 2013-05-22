@@ -15,6 +15,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean id="groupSequence" class="name.elegant.phono.core.common.dao.GroupSequence" init-method="init">
+        <property name="logicTableName" value="picture"/>
+        <property name="stepLength" value="100"/>
+    </bean>
     <!--<bean id="iBatisAccessLogDAO" class="name.elegant.phono.core.admin.dao.impl.IBatisAccessLogDAO">-->
     <!--<property name="dataSource">-->
     <!--<ref bean="dataSource"/>-->
