@@ -18,11 +18,11 @@ import java.util.Random;
  * Date: 13-7-29 下午10:55
  * E-mail:flyhzq@sina.com
  */
-public class NumberTest {
+public class StringTest {
 
     private static Random random = new Random();
 
-    private List<PersonNumber> testList = generateThousandPerson();
+    private List<PersonString> testList = generateThousandPerson();
 
     private List<String> testList_de = generateThousandPersonString();
 
@@ -61,7 +61,7 @@ public class NumberTest {
                 if (type == 1)
                     gson.toJson(testList.get(j));
                 else
-                    gson.fromJson(testList_de.get(j), PersonNumber.class);
+                    gson.fromJson(testList_de.get(j), PersonString.class);
 //                System.out.println(gson.toJson(testList.get(j)));
             }
         }
@@ -76,7 +76,7 @@ public class NumberTest {
                 if (type == 1)
                     objectMapper.writeValueAsString(testList.get(j));
                 else
-                    objectMapper.readValue(testList_de.get(j), PersonNumber.class);
+                    objectMapper.readValue(testList_de.get(j), PersonString.class);
 //                System.out.println(objectMapper.writeValueAsString(testList.get(j)));
             }
         }
@@ -91,7 +91,7 @@ public class NumberTest {
                 if (type == 1)
                     JSON.toJSONString(testList.get(j));
                 else
-                    JSON.parseObject(testList_de.get(j), PersonNumber.class);
+                    JSON.parseObject(testList_de.get(j), PersonString.class);
 //                System.out.println(JSON.toJSONString(testList.get(j)));
             }
         }
@@ -105,8 +105,8 @@ public class NumberTest {
         System.out.println(type + " used:" + diff + " seconds");
     }
 
-    private List<PersonNumber> generateThousandPerson() {
-        List<PersonNumber> list = new ArrayList<PersonNumber>();
+    private List<PersonString> generateThousandPerson() {
+        List<PersonString> list = new ArrayList<PersonString>();
         for (int i = 0; i < 1000; i++) {
             list.add(generatePerson());
         }
@@ -122,57 +122,56 @@ public class NumberTest {
     }
 
     private String generatePersonString() {
-        return "{\"age\":" + random.nextInt(100) + ",\"height\":" + random.nextDouble() + 1 +
-                ",\"birth\":" + System.currentTimeMillis() + ",\"cardId\":" + random.nextLong() + "}";
+        return "{\"name\":\"张55\",\"address\":\"浙江省杭州市文一路77号\",\"sex\":\"b\",\"postCode\":\"-6457373387768980607\"}";
     }
 
-    private PersonNumber generatePerson() {
-        PersonNumber person = new PersonNumber();
-        person.setAge(random.nextInt(100));
-        person.setHeight(random.nextDouble() + 1);
-        person.setBirth(System.currentTimeMillis());
-        person.setCardId(random.nextLong());
+    private PersonString generatePerson() {
+        PersonString person = new PersonString();
+        person.setName("张" + random.nextInt(100));
+        person.setAddress("浙江省杭州市文一路" + random.nextInt(100) + "号");
+        person.setPostCode("" + random.nextLong());
+        person.setSex(random.nextInt(100) > 49 ? 'b' : 'g');
         return person;
     }
 
 }
 
-class PersonNumber {
-    private int age;
-    private double height;
-    private long birth;
-    private long cardId;
+class PersonString {
+    private String name;
+    private String address;
+    private char sex;
+    private String postCode;
 
-    public int getAge() {
-        return age;
+    public String getName() {
+        return name;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public long getBirth() {
-        return birth;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBirth(long birth) {
-        this.birth = birth;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public long getCardId() {
-        return cardId;
+    public char getSex() {
+        return sex;
     }
 
-    public void setCardId(long cardId) {
-        this.cardId = cardId;
+    public void setSex(char sex) {
+        this.sex = sex;
     }
 
-    public double getHeight() {
-        return height;
+    public String getPostCode() {
+        return postCode;
     }
 
-    public void setHeight(double height) {
-        this.height = height;
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 }
 
